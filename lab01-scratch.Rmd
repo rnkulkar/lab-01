@@ -100,9 +100,9 @@ current_trails <- trails %>%
 
 ```{r eval = F}
 ggplot(data = current_trails) +
-  geom_histogram(mapping = aes(x = _____), binwidth = 0.5)
+  geom_histogram(mapping = aes(x = length), binwidth = 0.5)
 
-ggplot(data = current_trails, mapping = aes(x = as.factor(class), y = _____)) +
+ggplot(data = current_trails, mapping = aes(x = as.factor(class), y = length)) +
   geom_boxplot()
 ```
 
@@ -112,14 +112,14 @@ See [Section 7.3.1 "Visualizing Distributions"](https://r4ds.had.co.nz/explorato
 
 ```{r eval = FALSE}
 current_trails %>%
-  summarise(min = __________, 
-            q1 = __________, 
-            median = __________, 
-            q3 = __________, 
-            max = __________, 
-            iqr = __________, 
-            mean = __________, 
-            std_dev = __________
+  summarise(min = min(length), 
+            q1 = quantile(length, 0.25), 
+            median = median(length), 
+            q3 = quantile(length, 0.75), 
+            max = max(length), 
+            iqr = IQR(length), 
+            mean = mean(length), 
+            std_dev = sd(length)
             )
 ```
 

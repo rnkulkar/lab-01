@@ -1,6 +1,6 @@
 ---
 title: "Untitled"
-author: "STAT 108"
+author: "Rohit Kulkarni"
 date: "1/11/2022"
 output:
   pdf_document: default

@@ -47,6 +47,8 @@ View(trails)
 1. Now that we've had a quick view of the dataset, let's get more details about its structure. Sometimes viewing a summary of the data structure is more useful than viewing the raw data, especially if the dataset has a large number of observations and/or rows. Run the code below to use the `glimpse` function to see a summary of the `trails` dataset.
 
     How many observations are in the `trails` dataset? How many variables?
+    
+    There are 739 observations in the trails dataset and 12 variables.
 
   
 ```{r eval = F}
@@ -58,29 +60,33 @@ glimpse(trails)
 
     - What is a type of graph that's appropriate to visualize the distribution of `status`? Fill in the `ggplot` code below to plot the distribution of `status`. Include informative axis labels and title on the graph.
     
+    A bar graph is an appropriate visualization of the 'status' data because trails are either 'Proposed' or 'Existing', and the bar graph would show the proportion of each type.
+    
     - Then, calculate the proportion of observations in each category of `status` by completing the code below.
+    
+    66.7% of the observations are existing trails and 33.3% are proposed trails.
 
 ```{r eval=FALSE}
 ggplot(data = trails, aes(x = status)) + 
-  __________ + 
-  labs(x = "_________", 
-       y = "_________", 
-       title = "__________")
+   geom_bar(stat = 'count') + 
+  labs(x = "Status", 
+       y = "# of Trails", 
+       title = "Status of Trails")
 ```
 
 
 
 ```{r eval = FALSE}
 trails %>%
-  count(_____) %>%
+  count(status) %>%
   mutate(proportion = n / sum(n))
 ```
 
 3. Since we want to analyze characteristics for trails in the Bay Area, we will just use data from currently existing trails for the remainder of the analysis. Complete the code below to use the `filter` function to create a subset consisting only of trails that currently exist and have a value reported for `length`. Assign the subset the name `current_trails`. (*Hint: There should be 493 observations in current_trails.*)
 
 ```{r eval = F}
-__________ <- trails %>%
-  filter(status == "______", !is.na(______))
+current_trails <- trails %>%
+  filter(status == "Existing", !is.na(status))
 ````
 
 

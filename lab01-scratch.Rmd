@@ -135,18 +135,63 @@ current_trails %>%
 
 8. Consider the distribution of `class`. 
     - What are the values of `class` in the dataset? Show the code and output to support your answer. 
-    - What do you think is the most likely reason for the missing observations of `class`? In other words, what does a missing value of `class` indicate? 
+    
+    This is the line of code I ran to see the counts of each type of class:
+    
+    table(current_trails$class, useNA = 'always')
+    
+    According to the table, there are 407 class 1 trails, 80 class 2 trails,
+    2 class 3 trails, and 1 trail with no entry in the class field.
+    
+    - What do you think is the most likely reason for the missing observations of `class`? In other words, what does a missing value of `class` indicate?
+    
+    A missing value of class can either be an input error or that a class has not
+    yet been assigned to that trail.
+    
 
 9. Complete the code below to impute (i.e. fill in) the missing values of `class` with the appropriate value. After that, eliminate all the observations from class = 3, since we are not going to use the. Then, display the distribution of `class` to check that the missing values were correctly imputed.
 
 ```{r eval=FALSE}
-__________ <- __________ %>% filter(class !=3) %>% 
-  mutate(class = if_else(is.na(class),______,class)) 
+current_trails <- current_trails %>% filter(class !=3) %>% 
+  mutate(class = if_else(is.na(class), 1 ,class)) 
+
 ```
+Since there are far more class 1 trails than any other kind, I assumed the N/A trail
+was a class 1 trail.
+
+
 
 10. Now that we've completed the univariate EDA (i.e. examining one variable at a time), let's examine the relationship between the length of the trail and its class variable. Make a graph to visualize the relationship between `length` and `class` and calculate the appropriate summary statistics. Include informative axis labels and title on your graph.
 
+  I generated the graph using this code:
+  
+  ```
+  current_trails %>% ggplot(aes(x=factor(class), y=length)) +
+    stat_summary(fun=median, geom="bar") + 
+    labs(title="Median Length of Trails by Class", x="Class", y="Length")
+
+  ```
+  
+  I generated the summary statistics of each class with this code:
+  
+  ```
+  class_1_trails <- current_trails %>%
+    filter(class == 1)
+    
+  summary(class_1_trails$length)
+  ```
+  
+  For trail 1, these are the summary statistics:
+  Min: 0.01485, 1st Quartile: 0.19476, Median: 0.40833, Mean: 0.68193, 
+  3rd Quartile: 0.82290, Max: 4.13138
+  
+  For trail 2, these are the summary statistics:
+  Min: 0.04091, 1st Quartile: 0.30246, Median: 0.54844, Mean: 0.73338, 
+  3rd Quartile: 1.03346, Max: 2.52198
+
 11. Describe the relationship between `length` and `class`. In other words, describe how the distribution of `length` compares between trails that have different classes (1 = shared use bicycle and pedestrian path, 2 = bike lane, and 3 = bike route). Include information from the graph and summary statistics from the previous exercise in your response.
+
+  Through the data, I can see that the median length of class 1 is greater than the median length of class 2, however class 1 does have an outlier. The median length for class 1 trails is 0.40833 miles while the median length for class 2 trails is 0.7338 miles. The spread of the data for class 2 is higher than class 1, given that the IQR for class 1 is 0.62814 and the IQR for class 2 is 0.731. 
 
 *This is a good place to knit, commit, and push changes to your remote lab-01 repo on GitHub. Be sure to write informative commit message (e.g. "Completed exercises 8 - 11"), and push every file to GitHub by clicking the checkbox next to each file in the Git pane. After you push the changes, the Git pane in RStudio should be empty."*
 
